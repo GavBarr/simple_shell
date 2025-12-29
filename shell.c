@@ -14,6 +14,7 @@
 char *get_input();
 void clear_terminal_screen();
 void display_line(void);
+void execute_args(char token[]);
 void tokenize_input(char *input, char token[],int token_size);
 
 int main(){
@@ -33,7 +34,15 @@ int main(){
 		
 		char token[32];
 		tokenize_input(input, token, 32);
-		//create new process for the command being entered
+		execute_args(token);
+	}
+		
+	return 0;
+}
+
+void execute_args(char token[]){
+
+
 		pid_t pid = fork();
 		if(pid == 0){
 			char *argv[] = {token,NULL};
@@ -42,9 +51,6 @@ int main(){
 		}else{
 			wait(NULL);
 		}	
-	}
-		
-	return 0;
 }
 
 void tokenize_input(char *input, char token[], int token_size){
